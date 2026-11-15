@@ -21,3 +21,36 @@ def inserir_ficha(tab, col, jog):
             tab[lin][col] = jog
             return True
     return False  # Coluna cheia
+
+def verificar_vitoria(tab, jog):
+    """Verifica 4 fichas alinhadas na horizontal, vertical e diagonais."""
+    # Horizontal
+    for lin in range(LIN):
+        for col in range(COL - 3):
+            if all(tab[lin][col + i] == jog for i in range(4)):
+                return True
+
+    # Vertical
+    for lin in range(LIN - 3):
+        for col in range(COL):
+            if all(tab[lin + i][col] == jog for i in range(4)):
+                return True
+
+    # Diagonal principal (\)
+    for lin in range(LIN - 3):
+        for col in range(COL - 3):
+            if all(tab[lin + i][col + i] == jog for i in range(4)):
+                return True
+
+    # Diagonal secundária (/)
+    for lin in range(3, LIN):
+        for col in range(COL - 3):
+            if all(tab[lin - i][col + i] == jog for i in range(4)):
+                return True
+
+    return False
+
+
+def tabuleiro_cheio(tab):
+    """Retorna True se o topo estiver completamente ocupado."""
+    return all(tab[0][col] != 0 for col in range(COL))
